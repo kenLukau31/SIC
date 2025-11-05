@@ -1,6 +1,13 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
+const pino = require("pino")
+const logger = pino({
+  transport: {
+    target: 'pino-pretty',
+    options: { colorize: true }
+  }
+})
 
 // our "database" data
 let users = [
@@ -21,14 +28,18 @@ let reviews = [
 
 app.get("/movies", (req, res) => res.json(movies));
 
+
 app.get("/movies/:id", (req, res) => {
   const movie = movies.find(m => m.id === parseInt(req.params.id));
+  logger.info(`Request: GET /movies/${req.params.id} recived`)
   if (!movie) {
+    logger.warn(`Movie with id ${req.params.id} not found`)
     return res.status(404).json({ error: "Movie not found" });
   }
 
   // when returning a single movie we want to send back all the info about the movie
   // including the reviews of it
+
   const movieReviews = reviews.filter(r => r.movieId === movie.id);
   res.json({
     id: movie.id,
@@ -40,10 +51,14 @@ app.get("/movies/:id", (req, res) => {
 });
 
 app.get("/reviews/:id", (req, res) => {
+  logger.info(`Calling Review Service: GET /review?movieId=${movie.id}`)
   const review = reviews.find(r => r.id === parseInt(req.params.id));
   if (review) {
     res.json(review);
+
   } else {
+
+    logger.error(`Error fetching reviews: ${error.message}`)
     res.status(404).json({ error: "Review not found" });
   }
 });
