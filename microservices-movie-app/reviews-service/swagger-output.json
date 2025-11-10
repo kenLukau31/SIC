@@ -1,0 +1,195 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "Swagger documentation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3002",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Reviews",
+      "description": "Reviews related endpoints"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/reviews": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reviews found successfully",
+            "schema": {
+              "$ref": "#/definitions/GetReview"
+            }
+          },
+          "404": {
+            "description": "Reviews not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "New Review object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReview"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Review created successfully",
+            "schema": {
+              "$ref": "#/definitions/GetReview"
+            }
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review found successfully",
+            "schema": {
+              "$ref": "#/definitions/GetReview"
+            }
+          },
+          "404": {
+            "description": "Review not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update a Review",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReview"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reviews updated successfully",
+            "schema": {
+              "$ref": "#/definitions/GetReview"
+            }
+          },
+          "404": {
+            "description": "Reviews not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Review deleted successfully"
+          },
+          "404": {
+            "description": "Review not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GetReview": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 123
+        },
+        "movieId": {
+          "type": "number",
+          "example": 2
+        },
+        "userId": {
+          "type": "number",
+          "example": 3
+        },
+        "text": {
+          "type": "string",
+          "example": "Example Text"
+        }
+      }
+    },
+    "CreateReview": {
+      "type": "object",
+      "properties": {
+        "movieId": {
+          "type": "number",
+          "example": 2
+        },
+        "userId": {
+          "type": "number",
+          "example": 3
+        },
+        "text": {
+          "type": "string",
+          "example": "Example Text"
+        }
+      }
+    }
+  }
+}

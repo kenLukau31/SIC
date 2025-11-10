@@ -1,0 +1,183 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "Swagger documentation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Movies",
+      "description": "Movies related endpoints"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/movies": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Movies found successfully",
+            "schema": {
+              "$ref": "#/definitions/GetMovie"
+            }
+          },
+          "404": {
+            "description": "Movies not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Movies"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "New movie object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateMovie"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Movie created successfully",
+            "schema": {
+              "$ref": "#/definitions/GetMovie"
+            }
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie found successfully",
+            "schema": {
+              "$ref": "#/definitions/GetMovie"
+            }
+          },
+          "404": {
+            "description": "Movie not found"
+          },
+          "500": {
+            "description": "Failed to fetch reviews"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Movies"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update a movie",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateMovie"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies updated successfully",
+            "schema": {
+              "$ref": "#/definitions/GetMovie"
+            }
+          },
+          "404": {
+            "description": "Movies not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Movies"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Movie deleted successfully"
+          },
+          "404": {
+            "description": "Movie not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GetMovie": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 123
+        },
+        "title": {
+          "type": "string",
+          "example": "Example Title"
+        },
+        "year": {
+          "type": "number",
+          "example": 2025
+        }
+      }
+    },
+    "CreateMovie": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Example Title"
+        },
+        "year": {
+          "type": "number",
+          "example": 2025
+        }
+      }
+    }
+  }
+}
